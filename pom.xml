@@ -88,7 +88,7 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
-            <plugin>
+            <!-- <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
                 <version>1.6.13</version>
@@ -98,7 +98,7 @@
                     <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
-            </plugin>
+            </plugin> -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -184,6 +184,24 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>local</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <name>CP JPA Specification Resolver</name>
@@ -214,6 +232,11 @@
     </developers>
 
     <distributionManagement>
+        <repository>
+            <id>lht-release-local</id>
+            <name>LHT Artifactory Releases</name>
+            <url>${release.repo.url}</url>
+        </repository>
         <snapshotRepository>
             <id>ossrh</id>
             <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
@@ -225,8 +248,8 @@
     </distributionManagement>
 
     <scm>
-        <connection>https://github.com/cleverpine/cp-jpa-specification-resolver.git</connection>
-        <developerConnection>git@github.com:cleverpine/cp-jpa-specification-resolver.git</developerConnection>
-        <url>https://github.com/cleverpine/cp-jpa-specification-resolver</url>
+        <connection>https://cleverpine@dev.azure.com/cleverpine/JavaLibs/_git/cp-spring-specification-resolver</connection>
+        <developerConnection>git@ssh.dev.azure.com:v3/cleverpine/JavaLibs/cp-spring-specification-resolver</developerConnection>
+        <url>https://dev.azure.com/cleverpine/JavaLibs/_git/cp-spring-specification-resolver</url>
     </scm>
 </project>
