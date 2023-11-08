@@ -1,0 +1,16 @@
+trigger:
+  - main
+
+pr: none
+
+pool:
+  vmImage: ubuntu-latest
+
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: DevOps/azure-pipeline-templates
+
+extends:
+  template: pipeline-be-library.yaml@templates
