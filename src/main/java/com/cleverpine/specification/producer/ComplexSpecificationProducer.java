@@ -17,7 +17,6 @@ import jakarta.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * This class {@link ComplexSpecificationProducer} is responsible for producing complex specifications that involve
@@ -119,7 +118,7 @@ public class ComplexSpecificationProducer<T> {
                 .filter(spec -> !isOrderBySpecification(spec))
                 .map(spec -> spec.toPredicate(root, query, criteriaBuilder))
                 .filter(Objects::nonNull)
-                .collect(Collectors.toList())
+                .toList()
                 .toArray(new Predicate[]{});
 
             return criteriaBuilder.and(predicates);
