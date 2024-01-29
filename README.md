@@ -18,7 +18,6 @@ The following library consists of two independent main features:
 * [Requirements](#requirements)
 * [Library API](#library-api)
 * [Basic usage](#basic-usage)
-* [Usage with Spring](#usage-with-spring)
 * [Features](#features)
 * [Contribution](#contribution)
 
@@ -215,6 +214,8 @@ _When the criteria attribute name is the same as the entity attribute, it is not
 
 _Note! The defineJoinClause method in the joinConfig contains the join definitions. The join is created on-demand. The above specification producer will join the movies with actors only if a filter item with the actorName attribute is present._
 
+**For more detailed usage of the library in Spring and Quarkus see the [HOWTO.md](HOWTO.md) file.**
+
 ## Features
 
 #### Supported Filter Operators
@@ -231,12 +232,30 @@ Each filter item consists of three units - criteria attribute, filter operator a
 * Between / between
 * In / in
 
-#### Supported Sort Directions
+#### Supported Sort Directions and Multi-Level Sorting
 
-Each sort item consists of two parts - sort attribute and sort direction. The supported sort directions are:
+Each sort item in the request consists of two parts - the sort attribute and the sort direction. The supported sort directions are:
 
-* Ascending / asc
-* Descending / desc
+* Ascending (`asc`)
+* Descending (`desc`)
+
+Additionally, our system supports multi-level sorting, which allows sorting by more than one attribute in a single query. This feature is particularly useful when you need to organize data based on primary and secondary (or more) sorting criteria.
+
+##### How Multi-Level Sorting Works:
+
+Multi-level sorting is applied in the order of the specified sort parameters. The first sort parameter takes precedence, and subsequent sort parameters are used to further refine the sorting within the groups of data already sorted by the preceding parameters.
+
+##### Example of Multi-Level Sorting:
+
+Consider a dataset with attributes `Name` and `Age`.
+If we want to sort primarily by `Name` in ascending order and then by `Age` in descending order
+within each name, we would send two sort parameters:
+
+* First, sort by `Name` ascending: `sort=Name:asc`
+* Then, sort by `Age` descending within each name group: `sort=Age:desc`
+
+The resulting order would first group and sort all entities by `Name` in ascending order.
+Then, within each group of names, the entities would be sorted by `Age` in descending order.
 
 #### Joins on-demand
 

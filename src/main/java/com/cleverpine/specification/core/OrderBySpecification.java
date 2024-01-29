@@ -9,6 +9,7 @@ import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -45,7 +46,10 @@ public class OrderBySpecification<T> extends CriteriaExpressionSpecification<T> 
     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         Expression<?> criteriaExpression = buildCriteriaExpression(root, criteriaBuilder);
         List<Order> orderClauses = createOrderClauses(criteriaBuilder, criteriaExpression);
-        query.orderBy(orderClauses);
+
+        List<Order> orderList = new ArrayList<>(query.getOrderList());
+        orderList.addAll(orderClauses);
+        query.orderBy(orderList);
         return null;
     }
 
